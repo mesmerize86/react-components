@@ -1,23 +1,42 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Index = () => {
-  const [isChecked, setChecked] = useState(false);
-  const handlechange = (e) => {
+/**
+ * buttonId => unique and mandatory
+ * handleToggleButton => change event
+ *
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Index = (props) => {
+  const {
+    variant = "primary",
+    buttonID,
+    labelChecked,
+    labelUnchecked,
+    handleToggleChange
+  } = props;
+  const [isChecked, setChecked] = useState(props.defaultState);
+
+  const handleChange = (event) => {
     setChecked(!isChecked);
+    handleToggleChange(event);
   };
 
   return (
-    <ToggleButton>
+    <ToggleButton className={`${variant}`}>
       <CheckBox
-        type="checkbox"
-        id="checkboxToggle_1"
+        id={buttonID}
         name="checkboxToggle"
         defaultChecked={isChecked}
-        onChange={handlechange}
+        onChange={handleChange}
       />
-      <Label for="checkboxToggle_1">
-        <ToggleSwitch data-checked="Yes" data-unchecked="No" />
+      <Label htmlFor={buttonID}>
+        <ToggleSwitch
+          data-checked={labelChecked ? labelChecked : ""}
+          data-unchecked={labelUnchecked ? labelUnchecked : ""}
+        />
       </Label>
     </ToggleButton>
   );
@@ -25,23 +44,16 @@ const Index = () => {
 
 export default Index;
 
-const ToggleButton = styled.div`
-  position: relative;
-  width: 75px;
-  height: 60px;
-`;
-
 const ToggleSwitch = styled.div`
   height: 32px;
   width: 100%;
   border-radius: 60px;
-  background: ${(props) => props.theme.colour.monoLight};
+  background: ${(props) => props.theme.colour.bodyColor};
   transition: background-color 0.3s cubic-bezier(0.86, 0, 0.07, 1);
   box-sizing: border-box;
   color: ${(props) => props.theme.colour.whiteColor};
   position: relative;
   font-size: 14px;
-
   &:before {
     content: attr(data-unchecked);
     position: absolute;
@@ -49,7 +61,6 @@ const ToggleSwitch = styled.div`
     right: 10%;
     transform: translate(-50%, -50%);
   }
-
   &:after {
     content: "";
     position: absolute;
@@ -71,17 +82,17 @@ const Label = styled.label`
   cursor: pointer;
 `;
 
-const CheckBox = styled.input`
+const CheckBox = styled.input.attrs({
+  type: "checkbox"
+})`
   opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
-
   &:checked {
     ~ ${Label} {
       ${ToggleSwitch} {
-        background-color: ${(props) => props.theme.colour.encourage};
-
+        background-color: ${(props) => props.theme.colour.success};
         &:before {
           content: attr(data-checked);
           top: 50%;
@@ -89,9 +100,34 @@ const CheckBox = styled.input`
           transform: translate(-37%, -50%);
           text-align: center;
         }
-
         &:after {
           transform: translate3d(38px, 0, 0);
+        }
+      }
+    }
+  }
+`;
+
+const ToggleButton = styled.div`
+  position: relative;
+  width: 75px;
+  height: 60px;
+
+  &.primary {
+    ${CheckBox}:checked {
+      ~ ${Label} {
+        ${ToggleSwitch} {
+          background-color: ${(props) => props.theme.colour.primary};
+        }
+      }
+    }
+  }
+
+  &.default {
+    ${CheckBox}:checked {
+      ~ ${Label} {
+        ${ToggleSwitch} {
+          background-color: ${(props) => props.theme.colour.success};
         }
       }
     }
