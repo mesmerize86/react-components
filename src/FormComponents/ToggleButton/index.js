@@ -29,28 +29,22 @@ const ToggleButton = styled.div`
   position: relative;
   width: 75px;
   height: 60px;
-  box-sizing: border-box;
 `;
 
 const ToggleSwitch = styled.div`
   height: 32px;
   width: 100%;
   border-radius: 60px;
-  background: #9e9e9e;
+  background: ${(props) => props.theme.colour.monoLight};
   transition: background-color 0.3s cubic-bezier(0.86, 0, 0.07, 1);
   box-sizing: border-box;
-  color: #fff;
+  color: ${(props) => props.theme.colour.whiteColor};
   position: relative;
   font-size: 14px;
 
-  &:before,
-  &:after {
-    position: absolute;
-    transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
-  }
-
   &:before {
     content: attr(data-unchecked);
+    position: absolute;
     top: 50%;
     right: 10%;
     transform: translate(-50%, -50%);
@@ -59,6 +53,7 @@ const ToggleSwitch = styled.div`
 
   &:after {
     content: "";
+    position: absolute;
     transform: translate3d(0, 0, 0);
     top: 3px;
     left: 3px;
@@ -66,7 +61,8 @@ const ToggleSwitch = styled.div`
     width: 30px;
     height: 26px;
     z-index: 5;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.colour.whiteColor};
+    transition: transform 0.3s cubic-bezier(0.86, 0, 0.07, 1);
   }
 `;
 
@@ -86,7 +82,7 @@ const CheckBox = styled.input`
   &:checked {
     ~ ${Label} {
       ${ToggleSwitch} {
-        background-color: #158909;
+        background-color: ${(props) => props.theme.colour.encourage};
 
         &:before {
           content: attr(data-checked);
