@@ -5,7 +5,6 @@ const Index = () => {
   const [isChecked, setChecked] = useState(false);
   const handlechange = (e) => {
     setChecked(!isChecked);
-    console.log(isChecked);
   };
 
   return (
