@@ -48,7 +48,6 @@ const ToggleSwitch = styled.div`
     top: 50%;
     right: 10%;
     transform: translate(-50%, -50%);
-    text-align: center;
   }
 
   &:after {
@@ -69,7 +68,6 @@ const ToggleSwitch = styled.div`
 const Label = styled.label`
   display: flex;
   position: relative;
-  align-items: center;
   cursor: pointer;
 `;
 
